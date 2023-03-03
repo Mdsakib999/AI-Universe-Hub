@@ -2,18 +2,17 @@ const loadData = () => {
     
     fetch('https://openapi.programming-hero.com/api/ai/tools')
     .then(res => res.json())
-    .then(data => displayData(data.data.tools))
+    .then(data => displayData(data.data.tools.slice(0, 6)))
     loading(true);
 }
 
 const displayData = results => {
     const divContainer = document.getElementById('div-container');
-
+    divContainer.innerHTML = "";
     // to show 6 data only
-    results = results.slice(0, 6)
-    
+
     results.forEach(result => {
-        console.log(result);
+        // console.log(result.id);
         const creatDiv = document.createElement('div');
         creatDiv.classList.add('col');
         creatDiv.innerHTML =`
@@ -36,23 +35,39 @@ const displayData = results => {
                     <i class="fa-solid fa-calendar-days"></i> <span class='ms-2'>${result.published_in} </span>
                 </div>
                 <div>
-                    <i class="fa-solid fa-arrow-right"></i>
+                    <i onclick="seeModel('${result.id}')" class="fa-solid fa-arrow-right"></i>
                 </div>
             </div>
           </li>
         </ul>
         
-    </div>
-
-        `
-        divContainer.appendChild(creatDiv);
-        
+    </div>`
+        divContainer.appendChild(creatDiv);   
     });
-
-    
     loading(false)
 }
 
+
+const seeMore = () => {
+    fetch('https://openapi.programming-hero.com/api/ai/tools')
+    .then(res => res.json())
+    .then(data => displayData(data.data.tools))
+    loading(true);
+}
+
+
+// Show Modal
+const seeModel = (id) => {
+    
+    const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    console.log(URL);
+
+    fetch(URL)
+    .then((res) => res.json())
+    .then((data => console.log(data)));
+}
+
+// loading spinner
 const loading = isLoading => {
     const loadSection = document.getElementById('spinner');
     if(isLoading) {
