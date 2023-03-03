@@ -1,11 +1,17 @@
 const loadData = () => {
+    
     fetch('https://openapi.programming-hero.com/api/ai/tools')
     .then(res => res.json())
     .then(data => displayData(data.data.tools))
+    loading(true);
 }
 
 const displayData = results => {
     const divContainer = document.getElementById('div-container');
+
+    // to show 6 data only
+    results = results.slice(0, 6)
+    
     results.forEach(result => {
         console.log(result);
         const creatDiv = document.createElement('div');
@@ -42,7 +48,19 @@ const displayData = results => {
         divContainer.appendChild(creatDiv);
         
     });
+
+    
+    loading(false)
 }
 
+const loading = isLoading => {
+    const loadSection = document.getElementById('spinner');
+    if(isLoading) {
+        loadSection.classList.remove('d-none');
+    }
+    else{
+        loadSection.classList.add('d-none');
+    }
+}
 
 loadData();
