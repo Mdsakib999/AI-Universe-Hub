@@ -13,7 +13,7 @@ const displayData = results => {
     divContainer.innerHTML = "";
 
     results.forEach(result => {
-        // console.log(result.id);
+        console.log(result.published_in);
         const creatDiv = document.createElement('div');
         creatDiv.classList.add('col');
         creatDiv.innerHTML =`
@@ -54,6 +54,8 @@ const seeMore = () => {
     .then(res => res.json())
     .then(data => displayData(data.data.tools))
     loading(true);
+    const hide = document.getElementById('see-more');
+    hide.classList.add('d-none');
 }
 
 
@@ -69,12 +71,14 @@ const seeModel = (id) => {
 }
 
 const showModalDetails = (value) => {
-    console.log(value.features);
-    const gets = value.features
-    for(i in gets){
-        console.log(gets[i].feature_name);
-        
+    console.log(value.pricing[0]);
+    const gets = Object.keys(value.features);
+
+    for(const i of gets){
+        console.log(value.features[2].feature_name);
     }
+
+    
     const modalDiv = document.getElementById('modal-div');
     modalDiv.innerHTML = '';
     const div = document.createElement('div');
@@ -91,10 +95,10 @@ const showModalDetails = (value) => {
         <h3>${value.description}</h3>
         <div class="d-flex justify-content-around my-3">
         
-        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-success">${value.pricing[0].price} 
+        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-success">${value.pricing[0].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[0].price} 
         <p>${value.pricing[0].plan}</p>
         </div>
-        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-warning">${value.pricing[1].price} 
+        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-warning">${value.pricing[1].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[1].price} 
         <p>${value.pricing[1].plan}</p>
         </div>
         <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-danger">${value.pricing[2].price} 
@@ -106,18 +110,18 @@ const showModalDetails = (value) => {
             <div>
                 <h3>Features</h3>
                 <ul>
-                    <li>${gets[i].feature_name}</li>
-                    <li>${gets[i].feature_name}</li>
-                    <li>${gets[i].feature_name}</li>
+                    <li>${value.features[1].feature_name}</li>
+                    <li>${value.features[2].feature_name}</li>
+                    <li>${value.features[3].feature_name}</li>
                 </ul>
             </div>
 
             <div>
                 <h3>Integrations</h3>
                 <ul>
-                    <li>${value.integrations[0]}</li>
-                    <li>${value.integrations[1]}</li>
-                    <li>${value.integrations[2]}</li>
+                    <li>${value.integrations[0]  === undefined ? "Not Found" : value.integrations[0]}</li>
+                    <li>${value.integrations[1] === undefined ? "Not Found" : value.integrations[1]}</li>
+                    <li>${value.integrations[2] === undefined ? "Not Found" : value.integrations[2]}</li>
                 </ul>
             </div>
 
