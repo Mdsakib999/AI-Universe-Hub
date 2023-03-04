@@ -69,9 +69,73 @@ const seeModel = (id) => {
 }
 
 const showModalDetails = (value) => {
-    console.log(value);
+    console.log(value.features);
+    const gets = value.features
+    for(i in gets){
+        console.log(gets[i].feature_name);
+        
+    }
     const modalDiv = document.getElementById('modal-div');
+    modalDiv.innerHTML = '';
+    const div = document.createElement('div');
+    div.classList.add('modal-content');
+    div.innerHTML = `
+    <div class="modal-header">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     
+    </div>
+
+  <div class="modal-body d-flex gap-5 mx-5 my-5">
+
+    <div style = "width: 50%" class="b p-3 bg-danger bg-opacity-10">
+        <h3>${value.description}</h3>
+        <div class="d-flex justify-content-around my-3">
+        
+        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-success">${value.pricing[0].price} 
+        <p>${value.pricing[0].plan}</p>
+        </div>
+        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-warning">${value.pricing[1].price} 
+        <p>${value.pricing[1].plan}</p>
+        </div>
+        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-danger">${value.pricing[2].price} 
+        <p>${value.pricing[2].plan}</p>
+        </div>
+        </div>
+
+        <div class="d-flex justify-content-around mt-4">
+            <div>
+                <h3>Features</h3>
+                <ul>
+                    <li>${gets[i].feature_name}</li>
+                    <li>${gets[i].feature_name}</li>
+                    <li>${gets[i].feature_name}</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Integrations</h3>
+                <ul>
+                    <li>${value.integrations[0]}</li>
+                    <li>${value.integrations[1]}</li>
+                    <li>${value.integrations[2]}</li>
+                </ul>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <div style = "width: 50%" class="p-3 shadow-sm rounded">
+    <img src="${value.image_link[0]}" style="height: 350px; width: 100%" alt="">
+    <h3 class="text-center mt-3">${value.input_output_examples[0].input}</h3>
+    <p class="text-center">${value.input_output_examples[0].output}</p>
+    </div>
+    
+    
+  </div>
+  </div>
+    `
+    modalDiv.appendChild(div);
 }
 
 // loading spinner
