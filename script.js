@@ -63,8 +63,6 @@ const seeMore = () => {
 const seeModel = (id) => {
     
     const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`
-    
-
     fetch(URL)
     .then((res) => res.json())
     .then((data => showModalDetails(data.data)));
@@ -75,11 +73,9 @@ const showModalDetails = (value) => {
     const gets = Object.keys(value.features);
 
     for(const i of gets){
-        console.log(value.accuracy.score);
+        // console.log(value.accuracy.score);
     }
 
-    const acuId = document.getElementById('acu');
-    
 
     const modalDiv = document.getElementById('modal-div');
     modalDiv.innerHTML = '';
@@ -131,7 +127,7 @@ const showModalDetails = (value) => {
         
     </div>
 
-    <div  class="p-3 w-100 shadow-sm rounded">
+    <div  class="parent p-3 w-100 shadow-sm rounded">
     <img src="${value.image_link[0]}" style="height: 350px; width: 100%" alt="">
     <h3 class="text-center mt-3">${value.input_output_examples[0].input}</h3>
     <p class="text-center">${value.input_output_examples[0].output}</p>
