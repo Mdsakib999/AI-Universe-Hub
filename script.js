@@ -13,7 +13,7 @@ const displayData = results => {
     divContainer.innerHTML = "";
 
     results.forEach(result => {
-        console.log(result.published_in);
+        // console.log(result);
         const creatDiv = document.createElement('div');
         creatDiv.classList.add('col');
         creatDiv.innerHTML =`
@@ -63,7 +63,7 @@ const seeMore = () => {
 const seeModel = (id) => {
     
     const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`
-    console.log(URL);
+    
 
     fetch(URL)
     .then((res) => res.json())
@@ -71,14 +71,16 @@ const seeModel = (id) => {
 }
 
 const showModalDetails = (value) => {
-    console.log(value.pricing[0]);
+    // console.log(value.pricing[0]);
     const gets = Object.keys(value.features);
 
     for(const i of gets){
-        console.log(value.features[2].feature_name);
+        console.log(value.accuracy.score);
     }
 
+    const acuId = document.getElementById('acu');
     
+
     const modalDiv = document.getElementById('modal-div');
     modalDiv.innerHTML = '';
     const div = document.createElement('div');
@@ -89,19 +91,19 @@ const showModalDetails = (value) => {
     
     </div>
 
-  <div class="modal-body d-flex gap-5 mx-5 my-5">
+  <div class="modal-body d-lg-flex gap-5 mx-5 my-5">
 
-    <div style = "width: 50%" class="b p-3 bg-danger bg-opacity-10">
+    <div  class="b w-lg-50 p-3 bg-danger bg-opacity-10">
         <h3>${value.description}</h3>
-        <div class="d-flex justify-content-around my-3">
+        <div class="d-lg-flex g-2 justify-content-around my-3">
         
-        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-success">${value.pricing[0].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[0].price} 
+        <div class=" bg-light text-center my-2 p-3 shadow-sm rounded fw-bold text-success">${value.pricing[0].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[0].price} 
         <p>${value.pricing[0].plan}</p>
         </div>
-        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-warning">${value.pricing[1].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[1].price} 
+        <div class="bg-light text-center my-2 p-3 shadow-sm rounded fw-bold text-warning">${value.pricing[1].price ==="No cost" || value.pricing === null ? "Free of cost" : value.pricing[1].price} 
         <p>${value.pricing[1].plan}</p>
         </div>
-        <div class="bg-light text-center p-3 shadow-sm rounded fw-bold text-danger">${value.pricing[2].price} 
+        <div class="bg-light text-center my-2 p-3 shadow-sm rounded fw-bold text-danger">${value.pricing[2].price} 
         <p>${value.pricing[2].plan}</p>
         </div>
         </div>
@@ -129,10 +131,13 @@ const showModalDetails = (value) => {
         
     </div>
 
-    <div style = "width: 50%" class="p-3 shadow-sm rounded">
+    <div  class="p-3 w-100 shadow-sm rounded">
     <img src="${value.image_link[0]}" style="height: 350px; width: 100%" alt="">
     <h3 class="text-center mt-3">${value.input_output_examples[0].input}</h3>
     <p class="text-center">${value.input_output_examples[0].output}</p>
+
+    
+    <button id="acu" class="btn btn-danger top"><span id="accuracy">${value.accuracy.score === null ? '' : value.accuracy.score}</span>% accuracy</button>
     </div>
     
     
