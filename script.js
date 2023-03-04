@@ -6,10 +6,11 @@ const loadData = () => {
     loading(true);
 }
 
+
+// to show 6 data only
 const displayData = results => {
     const divContainer = document.getElementById('div-container');
     divContainer.innerHTML = "";
-    // to show 6 data only
 
     results.forEach(result => {
         // console.log(result.id);
@@ -17,7 +18,7 @@ const displayData = results => {
         creatDiv.classList.add('col');
         creatDiv.innerHTML =`
         <div class="card" style="width: 25rem;">
-        <img src="${result.image}" class="card-img-top p-3 " alt="...">
+        <img src="${result.image}" style="height: 250px; border-radius: 5%;" class="card-img-top p-3 " alt="...">
         <div class="card-body">
           <h3 class="card-title">Features</h3>
           <ol>
@@ -35,7 +36,7 @@ const displayData = results => {
                     <i class="fa-solid fa-calendar-days"></i> <span class='ms-2'>${result.published_in} </span>
                 </div>
                 <div>
-                    <i onclick="seeModel('${result.id}')" class="fa-solid fa-arrow-right"></i>
+                    <i onclick="seeModel('${result.id}')" type="button" class="fa-solid fa-arrow-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i>
                 </div>
             </div>
           </li>
@@ -47,7 +48,7 @@ const displayData = results => {
     loading(false)
 }
 
-
+// show all card 
 const seeMore = () => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
     .then(res => res.json())
@@ -64,7 +65,13 @@ const seeModel = (id) => {
 
     fetch(URL)
     .then((res) => res.json())
-    .then((data => console.log(data)));
+    .then((data => showModalDetails(data.data)));
+}
+
+const showModalDetails = (value) => {
+    console.log(value);
+    const modalDiv = document.getElementById('modal-div');
+    
 }
 
 // loading spinner
